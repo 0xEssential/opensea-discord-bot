@@ -40,7 +40,7 @@ const buildMessage = (sale: any) => (
 
 async function main() {
   const channel = await discordSetup();
-  const hoursAgo = (Math.round(new Date().getTime() / 1000) - (3_600 * 12)); // in the last hour, run hourly?
+  const hoursAgo = (Math.round(new Date().getTime() / 1000) - (3_600)); // in the last hour, run hourly?
   
   const openSeaResponse = await fetch(
     "https://api.opensea.io/api/v1/events?" + new URLSearchParams({
