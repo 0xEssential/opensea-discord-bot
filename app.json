@@ -1,0 +1,34 @@
+{
+  "name": "OpenSea Discord Bot",
+  "description": "A TS script to hit the OpenSea API for collection sales and send messages to Discord",
+  "keywords": [
+    "ethereum",
+    "nft",
+    "discord"
+  ],
+  "repository": "https://github.com/sbauch/opensea-discord-bot",
+  "env": {
+    "CONTRACT_ADDRESS": {
+      "description": "The address of your token contract"
+    },
+    "COLLECTION_SLUG": {
+      "description": "The OpenSea slug for your collection"
+    },
+    "DISCORD_BOT_TOKEN": {
+      "description": "The auth token for a Discord bot",
+      "required": true
+    },
+    "DISCORD_CHANNEL_ID": {
+      "description": "Your Discord channel ID (snowflake), i.e. 694927656805859499, where your Bot has access and will post",
+      "required": false
+    }
+  },
+  "image": "heroku/nodejs",
+  "addons": ["scheduler"],
+  "formation": [],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
