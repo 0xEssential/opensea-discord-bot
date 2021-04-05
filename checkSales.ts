@@ -74,7 +74,7 @@ const buildBidMessage = (sale: any) => (
 
 async function main() {
   const channel = await discordSetup();
-  const hoursAgo = (Math.round(new Date().getTime() / 1000) - (43200)); // in the last 10 minutes, run every 10 mins
+  const hoursAgo = (Math.round(new Date().getTime() / 1000) - (60)); // in the last 1 minute, run every 1 min 😬
   
 
   // SALES
