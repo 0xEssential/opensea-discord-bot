@@ -24,7 +24,7 @@ const buildSaleMessage = (sale: any) => (
 	.setColor('#0099ff')
 	.setTitle(sale.asset.name + ' sold!')
 	.setURL(sale.asset.permalink)
-	.setAuthor('OpenSea Bot', 'https://files.readme.io/566c72b-opensea-logomark-full-colored.png', 'https://github.com/sammybauch/discord-opensea')
+	.setAuthor('OpenSea Bot', 'https://files.readme.io/566c72b-opensea-logomark-full-colored.png', 'https://github.com/sbauch/opensea-discord-bot')
 	.setThumbnail(sale.asset.collection.image_url)
 	.addFields(
 		{ name: 'Name', value: sale.asset.name },
@@ -42,7 +42,7 @@ const buildListedMessage = (sale: any) => (
 	.setColor('#0099ff')
 	.setTitle(sale?.asset?.name + ' listed for sale')
 	.setURL(sale?.asset?.permalink)
-	.setAuthor('OpenSea Bot', 'https://files.readme.io/566c72b-opensea-logomark-full-colored.png', 'https://github.com/sammybauch/discord-opensea')
+	.setAuthor('OpenSea Bot', 'https://files.readme.io/566c72b-opensea-logomark-full-colored.png', 'https://github.com/sbauch/opensea-discord-bot')
 	.setThumbnail(sale?.asset?.collection?.image_url)
 	.addFields(
 		{ name: 'Name', value: sale?.asset?.name },
@@ -59,7 +59,7 @@ const buildBidMessage = (sale: any) => (
 	.setColor('#0099ff')
 	.setTitle(sale.asset.name + ' received a bid')
 	.setURL(sale.asset.permalink)
-	.setAuthor('OpenSea Bot', 'https://files.readme.io/566c72b-opensea-logomark-full-colored.png', 'https://github.com/sammybauch/discord-opensea')
+	.setAuthor('OpenSea Bot', 'https://files.readme.io/566c72b-opensea-logomark-full-colored.png', 'https://github.com/sbauch/opensea-discord-bot')
 	.setThumbnail(sale.asset.collection.image_url)
 	.addFields(
 		{ name: 'Name', value: sale.asset.name },
@@ -74,7 +74,8 @@ const buildBidMessage = (sale: any) => (
 
 async function main() {
   const channel = await discordSetup();
-  const hoursAgo = (Math.round(new Date().getTime() / 1000) - (60)); // in the last 1 minute, run every 1 min 😬
+  const seconds = process.env.SECONDS ? parseInt(process.env.SECONDS) : 3_600;
+  const hoursAgo = (Math.round(new Date().getTime() / 1000) - (seconds)); // in the last hour, run hourly?
   
 
   // SALES
