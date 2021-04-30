@@ -34,7 +34,7 @@ const buildMessage = (sale: any) => (
 		{ name: 'Seller', value: sale?.seller?.address,  },
 	)
   .setImage(sale.asset.image_url)
-	.setTimestamp(sale.created_date) // unclear why this seems broken
+	.setTimestamp(Date.parse(`${sale?.created_date}Z`))
 	.setFooter('Sold on OpenSea', 'https://files.readme.io/566c72b-opensea-logomark-full-colored.png')
 )
 
@@ -48,7 +48,7 @@ async function main() {
       offset: '0',
       limit: '100',
       event_type: 'successful',
-      only_opensea: 'true',
+      only_opensea: 'false',
       occurred_after: hoursAgo.toString(), 
       collection_slug: process.env.COLLECTION_SLUG!,
       contract_address: process.env.CONTRACT_ADDRESS!
@@ -63,7 +63,10 @@ async function main() {
 }
 
 main()
-  .then(() => process.exit(0))
+  .then((res) =>{ 
+    console.warn(res)
+    process.exit(0)
+  })
   .catch(error => {
     console.error(error);
     process.exit(1);
