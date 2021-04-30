@@ -55,7 +55,7 @@ async function main() {
   })).then((resp) => resp.json());
 
   await Promise.all(
-    openSeaResponse?.asset_events?.map(async (sale: any) => {
+    openSeaResponse?.asset_events?.reverse().map(async (sale: any) => {
       const message = buildMessage(sale);
       return channel.send(message)
     })
