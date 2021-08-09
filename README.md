@@ -1,5 +1,8 @@
 # Discord Bot for OpenSea
 
+Need help? [Join us on Discord](https://discord.gg/BheNSUfcvm)!
+
+
 This project includes a script that can be used to routinely hit the OpenSea API, check for recent sales on a collection, and post embeds into a Discord channel with information about the sale.
 
 Please don't abuse the OpenSea API by running this more frequently than once per hour. Ideally you should request an API key from OpenSea, and in a perfect world you would instead use Webhooks from OpenSea.
