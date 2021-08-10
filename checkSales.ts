@@ -51,7 +51,7 @@ async function main() {
       only_opensea: 'false',
       occurred_after: hoursAgo.toString(), 
       collection_slug: process.env.COLLECTION_SLUG!,
-      contract_address: process.env.CONTRACT_ADDRESS!
+      asset_contract_address: process.env.CONTRACT_ADDRESS!
   })).then((resp) => resp.json());
 
   await Promise.all(
