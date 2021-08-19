@@ -2,8 +2,8 @@ import 'dotenv/config';
 import Discord, { TextChannel } from 'discord.js';
 import fetch from 'node-fetch';
 import { ethers } from "ethers";
-import { parseISO } from 'date-fns'
 
+const OPENSEA_SHARED_STOREFRONT_ADDRESS = '0x495f947276749Ce646f68AC8c248420045cb7b5e';
 
 const discordBot = new Discord.Client();
 const  discordSetup = async (): Promise<TextChannel> => {
@@ -29,7 +29,7 @@ const buildMessage = (sale: any) => (
 	.setThumbnail(sale.asset.collection.image_url)
 	.addFields(
 		{ name: 'Name', value: sale.asset.name },
-		{ name: 'Amount', value: `${ethers.utils.formatEther(sale.total_price)}${ethers.constants.EtherSymbol}`},
+		{ name: 'Amount', value: `${ethers.utils.formatEther(sale.total_price || '0')}${ethers.constants.EtherSymbol}`},
 		{ name: 'Buyer', value: sale?.winner_account?.address, },
 		{ name: 'Seller', value: sale?.seller?.address,  },
 	)
@@ -43,18 +43,23 @@ async function main() {
   const seconds = process.env.SECONDS ? parseInt(process.env.SECONDS) : 3_600;
   const hoursAgo = (Math.round(new Date().getTime() / 1000) - (seconds)); // in the last hour, run hourly?
   
-  const openSeaResponse = await fetch(
-    "https://api.opensea.io/api/v1/events?" + new URLSearchParams({
-      offset: '0',
-      limit: '100',
-      event_type: 'successful',
-      only_opensea: 'false',
-      occurred_after: hoursAgo.toString(), 
-      collection_slug: process.env.COLLECTION_SLUG!,
-      asset_contract_address: process.env.CONTRACT_ADDRESS!
-  })).then((resp) => resp.json());
+  const params = new URLSearchParams({
+    offset: '0',
+    limit: '1',
+    event_type: 'successful',
+    only_opensea: 'false',
+    occurred_after: hoursAgo.toString(), 
+    collection_slug: process.env.COLLECTION_SLUG!,
+  })
 
-  await Promise.all(
+  if (process.env.CONTRACT_ADDRESS !== OPENSEA_SHARED_STOREFRONT_ADDRESS) {
+    params.append('asset_contract_address', process.env.CONTRACT_ADDRESS!)
+  }
+
+  const openSeaResponse = await fetch(
+    "https://api.opensea.io/api/v1/events?" + params).then((resp) => resp.json());
+    
+  return await Promise.all(
     openSeaResponse?.asset_events?.reverse().map(async (sale: any) => {
       const message = buildMessage(sale);
       return channel.send(message)
@@ -64,7 +69,7 @@ async function main() {
 
 main()
   .then((res) =>{ 
-    console.warn(res)
+    if (!res.length) console.log("No recent sales")
     process.exit(0)
   })
   .catch(error => {
