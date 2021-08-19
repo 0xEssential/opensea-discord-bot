@@ -58,10 +58,8 @@ async function main() {
 
   const openSeaResponse = await fetch(
     "https://api.opensea.io/api/v1/events?" + params).then((resp) => resp.json());
-  
-  console.log(openSeaResponse)
-  
-  await Promise.all(
+    
+  return await Promise.all(
     openSeaResponse?.asset_events?.reverse().map(async (sale: any) => {
       const message = buildMessage(sale);
       return channel.send(message)
@@ -71,7 +69,7 @@ async function main() {
 
 main()
   .then((res) =>{ 
-    console.warn(res)
+    if (!res.length) console.log("No recent sales")
     process.exit(0)
   })
   .catch(error => {
