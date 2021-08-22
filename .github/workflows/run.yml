@@ -16,7 +16,7 @@ jobs:
     
     - run: yarn ts-node ./checkSales.ts
       env:
-        CONTRACT_ADDRESS: 0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d
+        CONTRACT_ADDRESS: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'
         COLLECTION_SLUG: boredapeyachtclub
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
