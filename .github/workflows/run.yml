@@ -9,7 +9,7 @@ jobs:
   run:
     strategy:
       matrix:
-        channel: [813159972190945322, 879094113289519174]
+        channel: ["813159972190945322", "879094113289519174"]
     runs-on: ubuntu-latest
     steps:
 
