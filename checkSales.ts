@@ -45,7 +45,6 @@ async function main() {
   
   const params = new URLSearchParams({
     offset: '0',
-    limit: '1',
     event_type: 'successful',
     only_opensea: 'false',
     occurred_after: hoursAgo.toString(), 
