@@ -57,7 +57,7 @@ jobs:
         COLLECTION_SLUG: meebits
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
-  0n1-force:
+  0n1_force:
     strategy:
       matrix:
         channel: ["881555746867798077"]
@@ -91,7 +91,7 @@ jobs:
         COLLECTION_SLUG: pudgypenguins
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
-  bored-ape-kennel-club:
+  bored_ape_kennel_club:
     strategy:
       matrix:
         channel: ["881555746867798077"]
@@ -108,7 +108,7 @@ jobs:
         COLLECTION_SLUG: bored-ape-kennel-club
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
-  cool-cats-nft:
+  cool_cats_nft:
     strategy:
       matrix:
         channel: ["881555746867798077"]
