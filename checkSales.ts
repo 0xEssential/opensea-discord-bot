@@ -6,15 +6,13 @@ import { ethers } from "ethers";
 const OPENSEA_SHARED_STOREFRONT_ADDRESS = '0x495f947276749Ce646f68AC8c248420045cb7b5e';
 
 const discordBot = new Discord.Client();
-const  discordSetup = async (): Promise<TextChannel> => {
+const  discordSetup = async (channel: string): Promise<TextChannel> => {
+  const channelID = channel
   return new Promise<TextChannel>((resolve, reject) => {
-    ['DISCORD_BOT_TOKEN', 'DISCORD_CHANNEL_ID'].forEach((envVar) => {
-      if (!process.env[envVar]) reject(`${envVar} not set`)
-    })
-  
+    if (!process.env['DISCORD_BOT_TOKEN']) reject('DISCORD_BOT_TOKEN not set')
     discordBot.login(process.env.DISCORD_BOT_TOKEN);
     discordBot.on('ready', async () => {
-      const channel = await discordBot.channels.fetch(process.env.DISCORD_CHANNEL_ID!);
+      const channel = await discordBot.channels.fetch(channelID!);
       resolve(channel as TextChannel);
     });
   })
@@ -39,7 +37,6 @@ const buildMessage = (sale: any) => (
 )
 
 async function main() {
-  const channel = await discordSetup();
   const seconds = process.env.SECONDS ? parseInt(process.env.SECONDS) : 3_600;
   const hoursAgo = (Math.round(new Date().getTime() / 1000) - (seconds)); // in the last hour, run hourly?
   
@@ -61,8 +58,12 @@ async function main() {
   return await Promise.all(
     openSeaResponse?.asset_events?.reverse().map(async (sale: any) => {
       if (sale.asset.name == null) sale.asset.name = 'Unnamed NFT';
-      const message = buildMessage(sale);
-      return channel.send(message)
+      return await Promise.all(
+        process.env.DISCORD_CHANNEL_ID.split(';').map(async (channel: string) => {
+          const message = buildMessage(sale);
+          return await (await discordSetup(channel)).send(message)
+        })
+      )
     })
   );   
 }
