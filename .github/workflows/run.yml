@@ -8,6 +8,7 @@ on:
 jobs:
   boredapeyachtclub:
     strategy:
+      fail-fast: false
       matrix:
         channel: ["879094113289519174", "881555746867798077"]
     runs-on: ubuntu-latest
@@ -25,6 +26,7 @@ jobs:
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
   cryptopunks:
     strategy:
+      fail-fast: false
       matrix:
         channel: ["881555746867798077"]
     runs-on: ubuntu-latest
@@ -42,6 +44,7 @@ jobs:
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
   meebits:
     strategy:
+      fail-fast: false
       matrix:
         channel: ["881555746867798077"]
     runs-on: ubuntu-latest
@@ -59,6 +62,7 @@ jobs:
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
   zeron1_force:
     strategy:
+      fail-fast: false
       matrix:
         channel: ["881555746867798077"]
     runs-on: ubuntu-latest
@@ -76,6 +80,7 @@ jobs:
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
   pudgypenguins:
     strategy:
+      fail-fast: false
       matrix:
         channel: ["881555746867798077"]
     runs-on: ubuntu-latest
@@ -93,6 +98,7 @@ jobs:
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
   bored_ape_kennel_club:
     strategy:
+      fail-fast: false
       matrix:
         channel: ["881555746867798077"]
     runs-on: ubuntu-latest
@@ -110,6 +116,7 @@ jobs:
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
   cool_cats_nft:
     strategy:
+      fail-fast: false
       matrix:
         channel: ["881555746867798077"]
     runs-on: ubuntu-latest
@@ -127,6 +134,7 @@ jobs:
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
   hashmasks:
     strategy:
+      fail-fast: false
       matrix:
         channel: ["881555746867798077"]
     runs-on: ubuntu-latest
@@ -144,6 +152,7 @@ jobs:
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
   veefriends:
     strategy:
+      fail-fast: false
       matrix:
         channel: ["881555746867798077"]
     runs-on: ubuntu-latest
@@ -161,6 +170,7 @@ jobs:
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
   axie:
     strategy:
+      fail-fast: false
       matrix:
         channel: ["881555746867798077"]
     runs-on: ubuntu-latest
