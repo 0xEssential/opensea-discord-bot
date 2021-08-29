@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        channel: ["881555746867798077"]
+        channel: ["881583692219289600"]
     runs-on: ubuntu-latest
     steps:
 
