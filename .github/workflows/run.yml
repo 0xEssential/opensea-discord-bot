@@ -57,7 +57,7 @@ jobs:
         COLLECTION_SLUG: meebits
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
-  0n1_force:
+  zeron1_force:
     strategy:
       matrix:
         channel: ["881555746867798077"]
