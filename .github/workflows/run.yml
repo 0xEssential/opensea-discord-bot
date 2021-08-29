@@ -18,6 +18,8 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
+    - run: sleep $((5 + RANDOM % 30));
+
     - run: yarn ts-node ./checkSales.ts
       env:
         CONTRACT_ADDRESS: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'
@@ -36,6 +38,8 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
+    - run: sleep $((5 + RANDOM % 30));
+
     - run: yarn ts-node ./checkSales.ts
       env:
         CONTRACT_ADDRESS: '0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB'
@@ -54,6 +58,8 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
+    - run: sleep $((5 + RANDOM % 30));
+
     - run: yarn ts-node ./checkSales.ts
       env:
         CONTRACT_ADDRESS: '0x7Bd29408f11D2bFC23c34f18275bBf23bB716Bc7'
@@ -72,6 +78,8 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
+    - run: sleep $((5 + RANDOM % 30));
+
     - run: yarn ts-node ./checkSales.ts
       env:
         CONTRACT_ADDRESS: '0x3bf2922f4520a8BA0c2eFC3D2a1539678DaD5e9D'
@@ -90,6 +98,8 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
+    - run: sleep $((5 + RANDOM % 30));
+
     - run: yarn ts-node ./checkSales.ts
       env:
         CONTRACT_ADDRESS: '0xBd3531dA5CF5857e7CfAA92426877b022e612cf8'
@@ -108,6 +118,8 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
+    - run: sleep $((5 + RANDOM % 30));
+
     - run: yarn ts-node ./checkSales.ts
       env:
         CONTRACT_ADDRESS: '0xba30E5F9Bb24caa003E9f2f0497Ad287FDF95623'
@@ -126,6 +138,8 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
+    - run: sleep $((5 + RANDOM % 30));
+
     - run: yarn ts-node ./checkSales.ts
       env:
         CONTRACT_ADDRESS: '0x1A92f7381B9F03921564a437210bB9396471050C'
@@ -144,6 +158,8 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
+    - run: sleep $((5 + RANDOM % 30));
+
     - run: yarn ts-node ./checkSales.ts
       env:
         CONTRACT_ADDRESS: '0xC2C747E0F7004F9E8817Db2ca4997657a7746928'
@@ -162,6 +178,8 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
+    - run: sleep $((5 + RANDOM % 30));
+
     - run: yarn ts-node ./checkSales.ts
       env:
         CONTRACT_ADDRESS: '0xa3AEe8BcE55BEeA1951EF834b99f3Ac60d1ABeeB'
@@ -180,6 +198,8 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
+    - run: sleep $((5 + RANDOM % 30));
+
     - run: yarn ts-node ./checkSales.ts
       env:
         CONTRACT_ADDRESS: '0xF5b0A3eFB8e8E4c201e2A935F110eAaF3FFEcb8d'
