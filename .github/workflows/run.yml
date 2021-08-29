@@ -3,10 +3,30 @@ name: Run
 on: 
   workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '45 * * * *'
 
 jobs:
-  all:
+  boredapeyachtclub:
+    strategy:
+      fail-fast: false
+      matrix:
+        channel: ["879094113289519174", "881583692219289600"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
+    
+    - run: sleep $((15 + RANDOM % 300));
+
+    - run: yarn ts-node ./checkSales.ts
+      env:
+        CONTRACT_ADDRESS: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'
+        COLLECTION_SLUG: boredapeyachtclub
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+  cryptopunks:
     strategy:
       fail-fast: false
       matrix:
@@ -18,16 +38,7 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((15 + RANDOM % 60));
-
-    - run: yarn ts-node ./checkSales.ts
-      env:
-        CONTRACT_ADDRESS: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'
-        COLLECTION_SLUG: boredapeyachtclub
-        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
-        DISCORD_CHANNEL_ID: ${{ matrix.channel }}
-    
-    - run: sleep $((15 + RANDOM % 60));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -35,8 +46,19 @@ jobs:
         COLLECTION_SLUG: cryptopunks
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+  meebits:
+    strategy:
+      fail-fast: false
+      matrix:
+        channel: ["881583692219289600"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((15 + RANDOM % 60));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -44,8 +66,19 @@ jobs:
         COLLECTION_SLUG: meebits
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
-  
-    - run: sleep $((15 + RANDOM % 60));
+  zeron1_force:
+    strategy:
+      fail-fast: false
+      matrix:
+        channel: ["881583692219289600"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
+    
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -53,8 +86,19 @@ jobs:
         COLLECTION_SLUG: 0n1-force
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+  pudgypenguins:
+    strategy:
+      fail-fast: false
+      matrix:
+        channel: ["881583692219289600"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((15 + RANDOM % 60));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -62,8 +106,19 @@ jobs:
         COLLECTION_SLUG: pudgypenguins
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+  bored_ape_kennel_club:
+    strategy:
+      fail-fast: false
+      matrix:
+        channel: ["881583692219289600"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((15 + RANDOM % 60));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -71,8 +126,19 @@ jobs:
         COLLECTION_SLUG: bored-ape-kennel-club
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+  cool_cats_nft:
+    strategy:
+      fail-fast: false
+      matrix:
+        channel: ["881583692219289600"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((15 + RANDOM % 60));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -80,8 +146,19 @@ jobs:
         COLLECTION_SLUG: cool-cats-nft
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+  hashmasks:
+    strategy:
+      fail-fast: false
+      matrix:
+        channel: ["881583692219289600"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((15 + RANDOM % 60));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -89,8 +166,19 @@ jobs:
         COLLECTION_SLUG: hashmasks
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+  veefriends:
+    strategy:
+      fail-fast: false
+      matrix:
+        channel: ["881583692219289600"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((15 + RANDOM % 60));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -98,8 +186,19 @@ jobs:
         COLLECTION_SLUG: veefriends
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+  axie:
+    strategy:
+      fail-fast: false
+      matrix:
+        channel: ["881583692219289600"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((15 + RANDOM % 60));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
