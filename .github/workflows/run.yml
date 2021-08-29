@@ -6,10 +6,10 @@ on:
     - cron: '0 * * * *'
 
 jobs:
-  run:
+  boredapeyachtclub:
     strategy:
       matrix:
-        channel: ["813159972190945322", "879094113289519174"]
+        channel: ["879094113289519174", "881555746867798077"]
     runs-on: ubuntu-latest
     steps:
 
@@ -21,5 +21,158 @@ jobs:
       env:
         CONTRACT_ADDRESS: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'
         COLLECTION_SLUG: boredapeyachtclub
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+  cryptopunks:
+    strategy:
+      matrix:
+        channel: ["881555746867798077"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
+    
+    - run: yarn ts-node ./checkSales.ts
+      env:
+        CONTRACT_ADDRESS: '0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB'
+        COLLECTION_SLUG: cryptopunks
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+  meebits:
+    strategy:
+      matrix:
+        channel: ["881555746867798077"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
+    
+    - run: yarn ts-node ./checkSales.ts
+      env:
+        CONTRACT_ADDRESS: '0x7Bd29408f11D2bFC23c34f18275bBf23bB716Bc7'
+        COLLECTION_SLUG: meebits
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+  0n1-force:
+    strategy:
+      matrix:
+        channel: ["881555746867798077"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
+    
+    - run: yarn ts-node ./checkSales.ts
+      env:
+        CONTRACT_ADDRESS: '0x3bf2922f4520a8BA0c2eFC3D2a1539678DaD5e9D'
+        COLLECTION_SLUG: 0n1-force
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+  pudgypenguins:
+    strategy:
+      matrix:
+        channel: ["881555746867798077"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
+    
+    - run: yarn ts-node ./checkSales.ts
+      env:
+        CONTRACT_ADDRESS: '0xBd3531dA5CF5857e7CfAA92426877b022e612cf8'
+        COLLECTION_SLUG: pudgypenguins
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+  bored-ape-kennel-club:
+    strategy:
+      matrix:
+        channel: ["881555746867798077"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
+    
+    - run: yarn ts-node ./checkSales.ts
+      env:
+        CONTRACT_ADDRESS: '0xba30E5F9Bb24caa003E9f2f0497Ad287FDF95623'
+        COLLECTION_SLUG: bored-ape-kennel-club
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+  cool-cats-nft:
+    strategy:
+      matrix:
+        channel: ["881555746867798077"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
+    
+    - run: yarn ts-node ./checkSales.ts
+      env:
+        CONTRACT_ADDRESS: '0x1A92f7381B9F03921564a437210bB9396471050C'
+        COLLECTION_SLUG: cool-cats-nft
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+  hashmasks:
+    strategy:
+      matrix:
+        channel: ["881555746867798077"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
+    
+    - run: yarn ts-node ./checkSales.ts
+      env:
+        CONTRACT_ADDRESS: '0xC2C747E0F7004F9E8817Db2ca4997657a7746928'
+        COLLECTION_SLUG: hashmasks
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+  veefriends:
+    strategy:
+      matrix:
+        channel: ["881555746867798077"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
+    
+    - run: yarn ts-node ./checkSales.ts
+      env:
+        CONTRACT_ADDRESS: '0xa3AEe8BcE55BEeA1951EF834b99f3Ac60d1ABeeB'
+        COLLECTION_SLUG: veefriends
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+  axie:
+    strategy:
+      matrix:
+        channel: ["881555746867798077"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
+    
+    - run: yarn ts-node ./checkSales.ts
+      env:
+        CONTRACT_ADDRESS: '0xF5b0A3eFB8e8E4c201e2A935F110eAaF3FFEcb8d'
+        COLLECTION_SLUG: axie
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
