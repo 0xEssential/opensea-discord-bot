@@ -18,7 +18,7 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((5 + RANDOM % 30));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -38,7 +38,7 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((5 + RANDOM % 30));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -58,7 +58,7 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((5 + RANDOM % 30));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -78,7 +78,7 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((5 + RANDOM % 30));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -98,7 +98,7 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((5 + RANDOM % 30));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -118,7 +118,7 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((5 + RANDOM % 30));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -138,7 +138,7 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((5 + RANDOM % 30));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -158,7 +158,7 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((5 + RANDOM % 30));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -178,7 +178,7 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((5 + RANDOM % 30));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -198,7 +198,7 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
     
-    - run: sleep $((5 + RANDOM % 30));
+    - run: sleep $((15 + RANDOM % 300));
 
     - run: yarn ts-node ./checkSales.ts
       env:
