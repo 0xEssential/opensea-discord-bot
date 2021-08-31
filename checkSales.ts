@@ -2,6 +2,7 @@ import 'dotenv/config';
 import Discord, { TextChannel } from 'discord.js';
 import fetch from 'node-fetch';
 import { ethers } from "ethers";
+import robeIds from './ids';
 
 const OPENSEA_SHARED_STOREFRONT_ADDRESS = '0x495f947276749Ce646f68AC8c248420045cb7b5e';
 
@@ -45,6 +46,7 @@ async function main() {
   
   const params = new URLSearchParams({
     offset: '0',
+    limit: '50',
     event_type: 'successful',
     only_opensea: 'false',
     occurred_after: hoursAgo.toString(), 
@@ -60,8 +62,11 @@ async function main() {
     
   return await Promise.all(
     openSeaResponse?.asset_events?.reverse().map(async (sale: any) => {
-      const message = buildMessage(sale);
-      return channel.send(message)
+      if (robeIds.includes(sale.asset.token_id)) {
+        const message = buildMessage(sale);
+        return channel.send(message)
+      }
+      return Promise.resolve()
     })
   );   
 }
