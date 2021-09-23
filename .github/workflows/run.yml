@@ -1,0 +1,25 @@
+name: Run
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  run:
+    strategy:
+      matrix:
+        channel: ["880245221840003112"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
+
+    - run: yarn ts-node ./checkSales.ts
+      env:
+        CONTRACT_ADDRESS: "0x7bb952ab78b28a62b1525aca54a71e7aa6177645"
+        COLLECTION_SLUG: "thousand-ether-homepage"
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        DISCORD_CHANNEL_ID: ${{ matrix.channel }}
