@@ -2,6 +2,7 @@ import 'dotenv/config';
 import Discord, { TextChannel } from 'discord.js';
 import fetch from 'node-fetch';
 import { ethers } from "ethers";
+import filter from './asset-name-filter.json';
 
 const OPENSEA_SHARED_STOREFRONT_ADDRESS = '0x495f947276749Ce646f68AC8c248420045cb7b5e';
 
@@ -60,8 +61,11 @@ async function main() {
     
   return await Promise.all(
     openSeaResponse?.asset_events?.reverse().map(async (sale: any) => {
-      const message = buildMessage(sale);
-      return channel.send(message)
+      // filter for asset name
+      if(filter['asset-name'].includes(sale.asset.name)){
+        const message = buildMessage(sale);
+        return channel.send(message)
+      }
     })
   );   
 }
