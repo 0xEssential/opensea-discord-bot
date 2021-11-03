@@ -5,6 +5,10 @@ on:
   schedule:
     - cron: '15,45 * * * *'
 
+env:
+  SECONDS: 1800
+  DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+
 jobs:
   mastablasta:
     runs-on: ubuntu-latest
@@ -21,7 +25,6 @@ jobs:
       env:
         CONTRACT_ADDRESS: '0xc92ceddfb8dd984a89fb494c376f9a48b999aafc'
         COLLECTION_SLUG: creature-world-collection
-        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: '879094113289519174;905196144169222245'
     
     - run: sleep 5
@@ -31,7 +34,6 @@ jobs:
       env:
         CONTRACT_ADDRESS: '0x8a90cab2b38dba80c64b7734e58ee1db38b8992e'
         COLLECTION_SLUG: doodles-official
-        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: '879094113289519174;905196184992354344'
         
   wilder:
@@ -49,7 +51,6 @@ jobs:
       env:
         CONTRACT_ADDRESS: '0xc2e9678a71e50e5aed036e00e9c5caeb1ac5987d'
         COLLECTION_SLUG: wilderworld
-        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: '879094113289519174;905543563461410847'
 
   # boredapeyachtclub:
