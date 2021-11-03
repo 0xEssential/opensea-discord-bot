@@ -33,6 +33,24 @@ jobs:
         COLLECTION_SLUG: doodles-official
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: '879094113289519174;905196184992354344'
+        
+  wilder:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
+    
+    - run: sleep 10
+
+    - name: wilderworld
+      run: yarn ts-node ./checkSales.ts
+      env:
+        CONTRACT_ADDRESS: '0xc2e9678a71e50e5aed036e00e9c5caeb1ac5987d'
+        COLLECTION_SLUG: wilderworld
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        DISCORD_CHANNEL_ID: '879094113289519174;905543563461410847'
 
   # boredapeyachtclub:
   #   runs-on: ubuntu-latest
