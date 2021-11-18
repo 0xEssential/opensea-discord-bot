@@ -25,6 +25,10 @@
     "SECONDS": {
       "description": "How many seconds should we look back for sales on OpenSea. i.e. 3600 for one hour. Running more frequently may get you banned from the OpenSea API",
       "required": false
+    },
+    "API_KEY": {
+      "description": "Your OpenSea API key",
+      "required": false
     }
   },
   "image": "heroku/nodejs",
