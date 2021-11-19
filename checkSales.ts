@@ -55,9 +55,15 @@ async function main() {
     params.append('asset_contract_address', process.env.CONTRACT_ADDRESS!)
   }
 
+  let opts = {};
+  console.log(process.env.OPENSEA_API_TOKEN)
+  if (process.env.OPENSEA_API_TOKEN) {
+    opts["headers"] = {"X-API-KEY": process.env.OPENSEA_API_TOKEN }
+  }
+
   const openSeaResponse = await fetch(
-    "https://api.opensea.io/api/v1/events?" + params).then((resp) => resp.json());
-    
+    "https://api.opensea.io/api/v1/events?" + params, opts).then((resp) => resp.json());
+
   return await Promise.all(
     openSeaResponse?.asset_events?.reverse().map(async (sale: any) => {
       const message = buildMessage(sale);
