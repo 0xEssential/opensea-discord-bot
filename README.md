@@ -2,6 +2,7 @@
 
 Need help? [Join us on Discord](https://discord.gg/BheNSUfcvm)!
 
+Non-developers should also consider using [Boto for their Discord sales bot needs](https://medium.com/boto-corp/opensea-nfts-to-discord-bot-no-code-eeec8340112d?source=friends_link&sk=df690bf11c6c5efa91a98a31a23e36f9). 
 
 This project includes a script that can be used to routinely hit the OpenSea API, check for recent sales on a collection, and post embeds into a Discord channel with information about the sale.
 
