@@ -53,7 +53,9 @@ async function main() {
   }
 
   const openSeaResponse = await fetch(
-    "https://api.opensea.io/api/v1/events?" + params).then((resp) => resp.json());
+    "https://api.opensea.io/api/v1/events?" + params, {
+      headers: {'X-API-KEY': process.env.OPENSEA_TOKEN}
+    }).then((resp) => resp.json());
     
   return await Promise.all(
     openSeaResponse?.asset_events?.reverse().map(async (sale: any) => {

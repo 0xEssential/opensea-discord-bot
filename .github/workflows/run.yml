@@ -8,6 +8,7 @@ on:
 env:
   SECONDS: 1800
   DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+  OPENSEA_TOKEN: ${{ secrets.OPENSEA_TOKEN }}
 
 jobs:
   mastablasta:
