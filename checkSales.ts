@@ -87,7 +87,7 @@ async function main() {
     const payload = responseText || "";
 
     if (payload.includes("cloudflare") && payload.includes("1020")) {
-      throw new Error("You are being rate-limited by OpenSea using Cloudflare. Please retrieve an OpenSea API token here: https://docs.opensea.io/reference/request-an-api-key")
+      throw new Error("You are being rate-limited by OpenSea. Please retrieve an OpenSea API token here: https://docs.opensea.io/reference/request-an-api-key")
     }
     
     throw e;
