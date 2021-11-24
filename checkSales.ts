@@ -57,20 +57,41 @@ async function main() {
     openSeaFetch['headers'] = {'X-API-KEY': process.env.OPENSEA_TOKEN}
   }
 
-  const openSeaResponse = await fetch(
-    "https://api.opensea.io/api/v1/events?" + params, openSeaFetch).then((resp) => resp.json());
+  let responseText = "";
+
+  try {
+    const openSeaResponseObj = await fetch(
+      "https://api.opensea.io/api/v1/events?" + params, openSeaFetch
+    );
+
+    responseText = await openSeaResponseObj.text();
+
+    const openSeaResponse = JSON.parse(responseText);
+
+    return await Promise.all(
+      openSeaResponse?.asset_events?.reverse().map(async (sale: any) => {
+        
+        if (sale.asset.name == null) sale.asset.name = 'Unnamed NFT';
+
+        const message = buildMessage(sale);
+
+        return await Promise.all(
+          process.env.DISCORD_CHANNEL_ID.split(';').map(async (channel: string) => {
+            return await (await discordSetup(channel)).send(message)
+          })
+        );
+      })
+    );
+  } catch (e) {
     
-  return await Promise.all(
-    openSeaResponse?.asset_events?.reverse().map(async (sale: any) => {
-      if (sale.asset.name == null) sale.asset.name = 'Unnamed NFT';
-      return await Promise.all(
-        process.env.DISCORD_CHANNEL_ID.split(';').map(async (channel: string) => {
-          const message = buildMessage(sale);
-          return await (await discordSetup(channel)).send(message)
-        })
-      )
-    })
-  );   
+    const payload = responseText || "";
+
+    if (payload.includes("cloudflare") && payload.includes("1020")) {
+      throw new Error("You are being rate-limited by OpenSea. Please retrieve an OpenSea API token here: https://docs.opensea.io/reference/request-an-api-key")
+    }
+    
+    throw e;
+  }
 }
 
 main()
