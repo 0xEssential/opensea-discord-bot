@@ -55,15 +55,33 @@ async function main() {
     params.append('asset_contract_address', process.env.CONTRACT_ADDRESS!)
   }
 
-  const openSeaResponse = await fetch(
-    "https://api.opensea.io/api/v1/events?" + params).then((resp) => resp.json());
+  let responseText = "";
+
+  try {
+    const openSeaResponseObj = await fetch(
+      "https://api.opensea.io/api/v1/events?" + params
+    );
+
+    responseText = await openSeaResponseObj.text();
+
+    const openSeaResponse = JSON.parse(responseText);
+
+    return await Promise.all(
+      openSeaResponse?.asset_events?.reverse().map(async (sale: any) => {
+        const message = buildMessage(sale);
+        return channel.send(message);
+      })
+    );
+  } catch (e) {
     
-  return await Promise.all(
-    openSeaResponse?.asset_events?.reverse().map(async (sale: any) => {
-      const message = buildMessage(sale);
-      return channel.send(message)
-    })
-  );   
+    const payload = responseText || "";
+
+    if (payload.includes("cloudflare") && payload.includes("1020")) {
+      throw new Error("You are being rate-limited by OpenSea using Cloudflare. Please retrieve an OpenSea API token.")
+    }
+    
+    throw e;
+  }
 }
 
 main()
