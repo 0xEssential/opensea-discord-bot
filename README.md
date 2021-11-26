@@ -74,6 +74,13 @@ The token from the discord bot you created above:
 DISCORD_BOT_TOKEN=SBI1MDI0NzUyNDQ3NzgyOTEz.YF36LQ.Sw-rczOfalK0lVzuW8vBjjcnsy0
 ```
 
+Your OpenSEA API token:
+```
+OPENSEA_TOKEN=some-key-here
+```
+
+ If you don't have one yet, [request for an API token](https://docs.opensea.io/reference/request-an-api-key).
+
 Then just run the code!
 ```
 $ yarn ts-node ./checkSales.ts
