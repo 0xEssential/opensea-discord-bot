@@ -8,7 +8,7 @@
     "date-fns": "^2.19.0",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
-    "ethers": "^5.1.0",
+    "ethers": "^5.5.3",
     "node-fetch": "^2.6.1",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.3"
