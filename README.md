@@ -2,6 +2,7 @@
 
 Need help? [Join us on Discord](https://discord.gg/BheNSUfcvm)!
 
+Non-developers should also consider using [Boto for their Discord sales bot needs](https://medium.com/boto-corp/opensea-nfts-to-discord-bot-no-code-eeec8340112d?source=friends_link&sk=df690bf11c6c5efa91a98a31a23e36f9). 
 
 This project includes a script that can be used to routinely hit the OpenSea API, check for recent sales on a collection, and post embeds into a Discord channel with information about the sale.
 
@@ -46,8 +47,41 @@ You can run this script locally by pulling the repo to your local machine.
 
 First, install the dependencies with `npm` or `yarn`.
 
-Then copy the `.env.example` file to `.env` and replace the example values with your own.
+Then copy the `.env.example` file to `.env` and replace the example values with your own. Or set them in your environment manually.
 
+The contract address for the NFT collection:
+```
+CONTRACT_ADDRESS=0x196c4C7291D47BCDBbf37ab7ec9AE7ECB21Aef52
+```
+
+The collection slug as found in the OS URL `https://opensea.io/collection/picassopunks`:
+```
+COLLECTION_SLUG=picassopunks
+```
+
+The Id of the discord channel to post sales to:
+```
+DISCORD_CHANNEL_ID=123456789101112130
+```
+
+You can also send to multiple channels by adding multiple IDs:
+```
+DISCORD_CHANNEL_ID=123456789101112130;123456789101738273;123456783649182736
+```
+
+The token from the discord bot you created above:
+```
+DISCORD_BOT_TOKEN=SBI1MDI0NzUyNDQ3NzgyOTEz.YF36LQ.Sw-rczOfalK0lVzuW8vBjjcnsy0
+```
+
+Your OpenSEA API token:
+```
+OPENSEA_TOKEN=some-key-here
+```
+
+ If you don't have one yet, [request for an API token](https://docs.opensea.io/reference/request-an-api-key).
+
+Then just run the code!
 ```
 $ yarn ts-node ./checkSales.ts
 // or

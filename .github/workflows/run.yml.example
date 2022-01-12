@@ -1,0 +1,26 @@
+name: Run
+
+on: 
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  run:
+    strategy:
+      matrix:
+        channel: ["XXXXXXXXXXXXXXXXXXX"]
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: mskelton/setup-yarn@v1
+    
+    - run: yarn ts-node ./checkSales.ts
+      env:
+        CONTRACT_ADDRESS: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'
+        COLLECTION_SLUG: boredapeyachtclub
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        DISCORD_CHANNEL_ID: ${{ matrix.channel }}
+
