@@ -88,6 +88,26 @@ $ yarn ts-node ./checkSales.ts
 $ ts-node ./checkSales.ts
 ```
 
+## Run with GitHub Actions (free)
+
+First, create a github account if you don't already have one.
+
+Next, fork this repo.
+
+![image](https://user-images.githubusercontent.com/7338312/151097166-db0de634-b03e-4104-811a-115dad2ebdde.png)
+
+Now that you have a fork of the repo in your own org, copy `.github/workflows/run.yml.example` to `.github/workflows/run.yml`.
+
+Fill in the following items:
+
+`        channel: ["XXXXXXXXXXXXXXXXXXX"]` a list of channels to send sales to.
+
+`        CONTRACT_ADDRESS: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'` the collection contract address
+
+`        COLLECTION_SLUG: boredapeyachtclub` the collection slug
+
+Finally, go to the repo settings, under `secrets` select `actions`. Click `New Repository Secret`. The name of the secret is `DISCORD_BOT_TOKEN` and the value is your token from the discord developer portal.
+
 ## Deploy to Heroku
 
 The easiest way to run this script on a chron scheduler is to deploy it to Heroku with this button:
