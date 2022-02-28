@@ -2,7 +2,7 @@
 
 Need help? [Join us on Discord](https://discord.gg/BheNSUfcvm)!
 
-Non-developers should also consider using [Boto for their Discord sales bot needs](https://medium.com/boto-corp/opensea-nfts-to-discord-bot-no-code-eeec8340112d?source=friends_link&sk=df690bf11c6c5efa91a98a31a23e36f9). 
+Non-developers should also consider using [Boto for their Discord sales bot needs](https://medium.com/boto-corp/opensea-nfts-to-discord-bot-no-code-eeec8340112d?source=friends_link&sk=df690bf11c6c5efa91a98a31a23e36f9).
 
 This project includes a script that can be used to routinely hit the OpenSea API, check for recent sales on a collection, and post embeds into a Discord channel with information about the sale.
 
@@ -49,6 +49,8 @@ First, install the dependencies with `npm` or `yarn`.
 
 Then copy the `.env.example` file to `.env` and replace the example values with your own. Or set them in your environment manually.
 
+Replace these:
+
 The contract address for the NFT collection:
 ```
 CONTRACT_ADDRESS=0x196c4C7291D47BCDBbf37ab7ec9AE7ECB21Aef52
@@ -82,6 +84,9 @@ OPENSEA_TOKEN=some-key-here
  If you don't have one yet, [request for an API token](https://docs.opensea.io/reference/request-an-api-key).
 
 Then just run the code!
+
+(assuming you have ts-node installed globally)
+
 ```
 $ yarn ts-node ./checkSales.ts
 // or
@@ -98,7 +103,7 @@ Heroku will require that you input the ENV vars that are necessary to run the sc
 
 The `scheduler` add-on is included in the `app.json` but **you still must schedule the script to run** and we recommend running it hourly. This way the script will run every hour and will check the OpenSea API for sales in the last hour.
 
-To set up the script to run on a schedule, once your Heroku app finishes deploying, click "Manage App", and then navigate to the Heroku Scheduler addon. Create a new job, run it every, and enter 
+To set up the script to run on a schedule, once your Heroku app finishes deploying, click "Manage App", and then navigate to the Heroku Scheduler addon. Create a new job, run it every, and enter
 
 ```bash
 yarn ts-node checkSales.ts
