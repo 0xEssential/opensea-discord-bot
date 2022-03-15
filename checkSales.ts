@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import Discord, { TextChannel, Message } from 'discord.js';
+import Discord, { TextChannel } from 'discord.js';
 import fetch from 'node-fetch';
 import { ethers } from "ethers";
 
@@ -8,7 +8,7 @@ const OPENSEA_SHARED_STOREFRONT_ADDRESS = '0x495f947276749Ce646f68AC8c248420045c
 const discordBot = new Discord.Client();
 
 class MockChannel {
-  send(message) {
+  send(message: any) {
     console.log(message);
   }
 }
@@ -64,21 +64,43 @@ async function main() {
     params.append('asset_contract_address', process.env.CONTRACT_ADDRESS!)
   }
 
-  let opts = {};
-  console.log(process.env.OPENSEA_API_TOKEN)
+  let openSeaFetch = {}
   if (process.env.OPENSEA_API_TOKEN) {
-    opts["headers"] = { "X-API-KEY": process.env.OPENSEA_API_TOKEN }
+    openSeaFetch["headers"] = { "X-API-KEY": process.env.OPENSEA_API_TOKEN }
+  } else {
+    console.debug("No OpenSea API token")
   }
 
-  const openSeaResponse = await fetch(
-    "https://api.opensea.io/api/v1/events?" + params, opts).then((resp) => resp.json());
+  let responseText = "";
 
-  return await Promise.all(
-    openSeaResponse?.asset_events?.reverse().map(async (sale: any) => {
-      const message = buildMessage(sale);
-      return channel.send(message)
-    })
-  );
+  try {
+    const openSeaResponseObj = await fetch(
+      "https://api.opensea.io/api/v1/events?" + params, openSeaFetch
+    );
+
+    responseText = await openSeaResponseObj.text();
+    const openSeaResponse = JSON.parse(responseText);
+    if (openSeaResponse.asset_events === undefined) {
+      console.error("Unexpected OpenSea response:", openSeaResponse);
+    }
+
+    return await Promise.all(
+      openSeaResponse?.asset_events?.reverse().map(async (sale: any) => {
+        if (sale.asset.name == null) sale.asset.name = 'Unnamed NFT';
+        const message = buildMessage(sale);
+        return await channel.send(message);
+      })
+    );
+  } catch (e) {
+
+    const payload = responseText || "";
+
+    if (payload.includes("cloudflare") && payload.includes("1020")) {
+      throw new Error("You are being rate-limited by OpenSea. Please retrieve an OpenSea API token here: https://docs.opensea.io/reference/request-an-api-key")
+    }
+
+    throw e;
+  }
 }
 
 main()
