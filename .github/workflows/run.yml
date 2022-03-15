@@ -12,10 +12,14 @@ jobs:
         channel: ["880245221840003112"]
     runs-on: ubuntu-latest
     steps:
-
     - uses: actions/checkout@v2
 
     - uses: mskelton/setup-yarn@v1
+
+    - uses: actions/cache@v2
+      with:
+        path: last_synced
+        key: last_synced
 
     - run: yarn ts-node ./checkSales.ts
       env:
@@ -24,4 +28,3 @@ jobs:
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         DISCORD_CHANNEL_ID: ${{ matrix.channel }}
         OPENSEA_API_TOKEN: ${{ secrets.OPENSEA_API_TOKEN }}
-
