@@ -50,23 +50,24 @@ const buildMessage = (sale: any) => (
 async function main() {
   const channel = await discordSetup();
   const seconds = process.env.SECONDS ? parseInt(process.env.SECONDS) : 3_600;
-  const hoursAgo = (Math.round(new Date().getTime() / 1000) - (seconds)); // in the last hour, run hourly?
+  const sinceTimestamp = (new Date()).getTime() - seconds * 1000; // in the last hour, run hourly?
 
   const params = new URLSearchParams({
-    offset: '0',
     event_type: 'successful',
     only_opensea: 'false',
-    occurred_after: hoursAgo.toString(),
     collection_slug: process.env.COLLECTION_SLUG!,
+    // Note: OpenSea no longer supports occurred_after, so we need to manually prune
   })
 
   if (process.env.CONTRACT_ADDRESS !== OPENSEA_SHARED_STOREFRONT_ADDRESS) {
     params.append('asset_contract_address', process.env.CONTRACT_ADDRESS!)
   }
 
-  let openSeaFetch = {}
+  let openSeaFetch = {
+    "headers": {"Accept": "application/json"},
+  }
   if (process.env.OPENSEA_API_TOKEN) {
-    openSeaFetch["headers"] = { "X-API-KEY": process.env.OPENSEA_API_TOKEN }
+    openSeaFetch["headers"]["X-API-KEY"] = process.env.OPENSEA_API_TOKEN;
   } else {
     console.debug("No OpenSea API token")
   }
@@ -74,23 +75,31 @@ async function main() {
   let responseText = "";
 
   try {
-    const openSeaResponseObj = await fetch(
-      "https://api.opensea.io/api/v1/events?" + params, openSeaFetch
-    );
+    const url = "https://api.opensea.io/api/v1/events?" + params;
+    const openSeaResponseObj = await fetch(url, openSeaFetch);
 
     responseText = await openSeaResponseObj.text();
-    const openSeaResponse = JSON.parse(responseText);
-    if (openSeaResponse.asset_events === undefined) {
-      console.error("Unexpected OpenSea response:", openSeaResponse);
+    const r = JSON.parse(responseText);
+    if (r.asset_events === undefined) {
+      throw new Error("Unexpected OpenSea response: " + url + " => "+ r);
     }
 
-    return await Promise.all(
-      openSeaResponse?.asset_events?.reverse().map(async (sale: any) => {
-        if (sale.asset.name == null) sale.asset.name = 'Unnamed NFT';
-        const message = buildMessage(sale);
-        return await channel.send(message);
-      })
-    );
+    const promises = [];
+    for (const sale of r.asset_events) {
+      const ts = +new Date(sale.transaction.timestamp + ".000Z"); // Fix their broken ISO UTC string (otherwise parses as local timezone)
+      if (ts < sinceTimestamp) {
+        // Reached stale events, bail
+        break
+      }
+      if (sale.asset.name == null) sale.asset.name = 'Unnamed NFT';
+      const message = buildMessage(sale);
+      promises.push(channel.send(message));
+    }
+
+    // FIXME: This does not paginate, if there's tons of sales with additional
+    // pages then we'll only return the first page.
+
+    return await Promise.all(promises);
   } catch (e) {
 
     const payload = responseText || "";
