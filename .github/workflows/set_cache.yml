@@ -1,0 +1,16 @@
+name: Set Cache
+
+on:
+  workflow_dispatch:
+jobs:
+  set_cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/cache@v2
+        with:
+          path: last_synced
+          key: last_synced
+
+      - run: echo $TIMESTAMP > last_synced
+        env:
+          TIMESTAMP: 1646754495780
