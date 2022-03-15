@@ -2,6 +2,7 @@ import 'dotenv/config';
 import Discord, { TextChannel } from 'discord.js';
 import fetch from 'node-fetch';
 import { ethers } from "ethers";
+import * as fs from 'fs';
 
 const OPENSEA_SHARED_STOREFRONT_ADDRESS = '0x495f947276749Ce646f68AC8c248420045cb7b5e';
 
@@ -49,8 +50,16 @@ const buildMessage = (sale: any) => (
 
 async function main() {
   const channel = await discordSetup();
-  const seconds = process.env.SECONDS ? parseInt(process.env.SECONDS) : 3_600;
-  const sinceTimestamp = (new Date()).getTime() - seconds * 1000; // in the last hour, run hourly?
+  // Either load sinceTimestamp for file or check in the last hour
+  const currentTimestamp = (new Date()).getTime();
+  let sinceTimestamp: number;
+  if (fs.existsSync('last_synced')) {
+    sinceTimestamp = parseInt(fs.readFileSync('last_synced', 'utf-8'));
+    console.log(`Syncing: last timestamp found, syncing from ${sinceTimestamp}`);
+  } else {
+    sinceTimestamp = currentTimestamp - 3_600 * 1000;
+    console.log(`Syncing: last timestamp not found, syncing for last hour (from ${sinceTimestamp})`);
+  }
 
   const params = new URLSearchParams({
     event_type: 'successful',
@@ -64,7 +73,7 @@ async function main() {
   }
 
   let openSeaFetch = {
-    "headers": {"Accept": "application/json"},
+    "headers": { "Accept": "application/json" },
   }
   if (process.env.OPENSEA_API_TOKEN) {
     openSeaFetch["headers"]["X-API-KEY"] = process.env.OPENSEA_API_TOKEN;
@@ -81,12 +90,16 @@ async function main() {
     responseText = await openSeaResponseObj.text();
     const r = JSON.parse(responseText);
     if (r.asset_events === undefined) {
-      throw new Error("Unexpected OpenSea response: " + url + " => "+ r);
+      throw new Error("Unexpected OpenSea response: " + url + " => " + r);
     }
 
+    let latestSaleTimestamp: number;
     const promises = [];
     for (const sale of r.asset_events) {
       const ts = +new Date(sale.transaction.timestamp + ".000Z"); // Fix their broken ISO UTC string (otherwise parses as local timezone)
+      if (latestSaleTimestamp === undefined) {
+        latestSaleTimestamp = ts + 1;
+      }
       if (ts < sinceTimestamp) {
         // Reached stale events, bail
         break
@@ -98,6 +111,10 @@ async function main() {
 
     // FIXME: This does not paginate, if there's tons of sales with additional
     // pages then we'll only return the first page.
+
+    latestSaleTimestamp ||= currentTimestamp;
+    console.log(`Syncing: saving timestamp ${latestSaleTimestamp}`);
+    fs.writeFileSync('last_synced', latestSaleTimestamp.toString())
 
     return await Promise.all(promises);
   } catch (e) {
