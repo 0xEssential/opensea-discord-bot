@@ -2,6 +2,8 @@ name: Run
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'
 
 jobs:
   run:
@@ -14,13 +16,22 @@ jobs:
 
     - uses: mskelton/setup-yarn@v1
 
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%s')"
+
     - uses: actions/cache@v2
       with:
         path: last_synced
-        key: last_synced
+        key: last_synced-${{ steps.date.outputs.date }}
+        restore-keys: |
+          last_synced-
+          last_synced
 
     - run: yarn ts-node ./checkSales.ts
       env:
         CONTRACT_ADDRESS: "0x7bb952ab78b28a62b1525aca54a71e7aa6177645"
         COLLECTION_SLUG: "thousand-ether-homepage"
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        DISCORD_CHANNEL_ID: ${{ matrix.channel }}
         OPENSEA_API_TOKEN: ${{ secrets.OPENSEA_API_TOKEN }}
