@@ -13,4 +13,4 @@ jobs:
 
       - run: echo $TIMESTAMP > last_synced
         env:
-          TIMESTAMP: 1646754495780
+          TIMESTAMP: 1658771559000
