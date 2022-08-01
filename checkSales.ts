@@ -55,7 +55,7 @@ async function main() {
   let sinceTimestamp: number;
   if (fs.existsSync('last_synced')) {
     sinceTimestamp = parseInt(fs.readFileSync('last_synced', 'utf-8'));
-    console.log(`Syncing: last timestamp found, syncing from ${sinceTimestamp}`);
+    console.log(`Syncing: last timestamp found, syncing from ${sinceTimestamp} (${(new Date(sinceTimestamp)).toISOString()})`);
   } else {
     sinceTimestamp = currentTimestamp - 3_600 * 1000;
     console.log(`Syncing: last timestamp not found, syncing for last hour (from ${sinceTimestamp})`);
@@ -108,6 +108,8 @@ async function main() {
       const message = buildMessage(sale);
       promises.push(channel.send(message));
     }
+
+    console.log(`Loaded ${r.asset_events.length} asset events, ${promises.length} recent, latest is ${latestSaleTimestamp}`);
 
     // FIXME: This does not paginate, if there's tons of sales with additional
     // pages then we'll only return the first page.
