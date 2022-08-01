@@ -1,0 +1,18 @@
+name: Keep Alive
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: '6 9 4 * *' # Run monthly, 4th of each month
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generating keepalive state
+        run: 'date >> .keepalive'
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'Monthly keepalive commit 🙃'
+          commit_author: Alive Keeper <actions@github.com>
