@@ -15,5 +15,10 @@
   },
   "devDependencies": {
     "@types/node-fetch": "^2.5.9"
-  }
+  },
+  "name": "opensea-discord-bot",
+  "version": "npm install --global yarn",
+  "main": "npm install --global yarn",
+  "repository": "https://github.com/cjh-web3/opensea-discord-bot.git",
+  "author": "CJ Hetherington <cam@cjh.tech>"
 }

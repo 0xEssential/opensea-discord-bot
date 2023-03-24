@@ -8,21 +8,25 @@
   ],
   "repository": "https://github.com/sbauch/opensea-discord-bot",
   "env": {
-    "CONTRACT_ADDRESS": {
+    "CONTRACT_ADDRESS=0x47691834Cbb96Ce5fBCd1c82f3804fBA63460370": {
       "description": "The address of your token contract"
     },
-    "COLLECTION_SLUG": {
+    "COLLECTION_SLUG=atlanteans": {
       "description": "The OpenSea slug for your collection"
     },
-    "DISCORD_BOT_TOKEN": {
+    "DISCORD_BOT_TOKEN=MTA4ODc4NjM2MTY2ODA3NTY2MA.Gg0aOb.j3TKFMT3WtwWkVc1DlEANHSaqwoBXjNKnL3nf4": {
       "description": "The auth token for a Discord bot",
       "required": true
     },
-    "DISCORD_CHANNEL_ID": {
+    "DISCORD_CHANNEL_ID=968519717558030396": {
       "description": "Your Discord channel ID (snowflake), i.e. 694927656805859499, where your Bot has access and will post",
       "required": false
     },
-    "SECONDS": {
+    "SECONDS=1": {
+      "description": "How many seconds should we look back for sales on OpenSea. i.e. 3600 for one hour. Running more frequently may get you banned from the OpenSea API",
+      "required": false
+    },
+    "OPENSEA_TOKEN=58df5fe6cf2d4baebd374279217b0498": {
       "description": "How many seconds should we look back for sales on OpenSea. i.e. 3600 for one hour. Running more frequently may get you banned from the OpenSea API",
       "required": false
     }
