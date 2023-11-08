@@ -88,8 +88,9 @@ async function main() {
     const openSeaResponseObj = await fetch(url, openSeaFetch);
 
     responseText = await openSeaResponseObj.text();
+    let r;
     try {
-      const r = JSON.parse(responseText);
+      r = JSON.parse(responseText);
     } catch (err) {
       throw new Error("Failed to parse OpenSea response: " + url + " \n" + responseText);
     }
