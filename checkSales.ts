@@ -4,8 +4,6 @@ import fetch from 'node-fetch';
 import { ethers } from "ethers";
 import * as fs from 'fs';
 
-const OPENSEA_SHARED_STOREFRONT_ADDRESS = '0x495f947276749Ce646f68AC8c248420045cb7b5e';
-
 const discordBot = new Discord.Client();
 
 class MockChannel {
@@ -33,18 +31,18 @@ const discordSetup = async (): Promise<TextChannel | MockChannel> => {
 const buildMessage = (sale: any) =>
   new Discord.MessageEmbed()
     .setColor("#0099ff")
-    .setTitle(sale.asset.name + " sold!")
+    .setTitle(sale.nft.name + " sold!")
     .setURL(
-      `https://opensea.io/assets/${sale.chain}/${sale.asset.contract}/${sale.asset.identifier}`
+      `https://opensea.io/assets/${sale.chain}/${sale.nft.contract}/${sale.nft.identifier}`
     )
     .setAuthor(
       "OpenSea Bot",
       "https://files.readme.io/566c72b-opensea-logomark-full-colored.png",
       "https://github.com/sbauch/opensea-discord-bot"
     )
-    .setThumbnail(process.env.COLLECTION_IMAGE_URL || sale.asset.image_url)
+    .setThumbnail(process.env.COLLECTION_IMAGE_URL || sale.nft.image_url)
     .addFields(
-      { name: "Name", value: sale.asset.name },
+      { name: "Name", value: sale.nft.name },
       {
         name: "Amount",
         value: `${ethers.utils.formatEther(BigInt(sale.payment.quantity || 0))}${
@@ -54,7 +52,7 @@ const buildMessage = (sale: any) =>
       { name: "Buyer", value: sale.buyer },
       { name: "Seller", value: sale.seller }
     )
-    .setImage(sale.asset.image_url)
+    .setImage(sale.nft.image_url)
     .setTimestamp(new Date(sale.closing_date * 1000))
     .setFooter(
       "Sold on OpenSea",
@@ -75,13 +73,9 @@ async function main() {
   }
 
   const params = new URLSearchParams({
-    event_type: 'order'
+    event_type: 'sale'
     // Note: OpenSea no longer supports occurred_after, so we need to manually prune
   })
-
-  if (process.env.CONTRACT_ADDRESS !== OPENSEA_SHARED_STOREFRONT_ADDRESS) {
-    params.append('asset_contract_address', process.env.CONTRACT_ADDRESS!)
-  }
 
   let openSeaFetch = {
     "headers": { "Accept": "application/json" },
@@ -95,7 +89,7 @@ async function main() {
   let responseText = "";
 
   try {
-    const url = "https://api.opensea.io/api/v2/events/" + process.env.COLLECTION_SLUG! + "?" + params;
+    const url = "https://api.opensea.io/api/v2/events/collection/" + process.env.COLLECTION_SLUG! + "?" + params;
     const openSeaResponseObj = await fetch(url, openSeaFetch);
 
     responseText = await openSeaResponseObj.text();
@@ -106,7 +100,7 @@ async function main() {
       throw new Error("Failed to parse OpenSea response: " + url + " \n" + responseText);
     }
     if (r.asset_events === undefined) {
-      throw new Error("Unexpected OpenSea response: " + url + " => " + r);
+      throw new Error("Unexpected OpenSea response: " + url + " => " + JSON.stringify(r));
     }
 
     let latestSaleTimestamp: number;
@@ -120,7 +114,7 @@ async function main() {
         // Reached stale events, bail
         break
       }
-      if (sale.asset.name == null) sale.asset.name = 'Unnamed NFT';
+      if (sale.nft.name == null) sale.nft.name = 'Unnamed NFT';
       const message = buildMessage(sale);
       promises.push(channel.send(message));
     }
