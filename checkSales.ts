@@ -30,23 +30,36 @@ const discordSetup = async (): Promise<TextChannel | MockChannel> => {
   })
 }
 
-const buildMessage = (sale: any) => (
+const buildMessage = (sale: any) =>
   new Discord.MessageEmbed()
-    .setColor('#0099ff')
-    .setTitle(sale.asset.name + ' sold!')
-    .setURL(sale.asset.permalink)
-    .setAuthor('OpenSea Bot', 'https://files.readme.io/566c72b-opensea-logomark-full-colored.png', 'https://github.com/sbauch/opensea-discord-bot')
-    .setThumbnail(sale.asset.collection.image_url)
+    .setColor("#0099ff")
+    .setTitle(sale.asset.name + " sold!")
+    .setURL(
+      `https://opensea.io/assets/${sale.chain}/${sale.asset.contract}/${sale.asset.identifier}`
+    )
+    .setAuthor(
+      "OpenSea Bot",
+      "https://files.readme.io/566c72b-opensea-logomark-full-colored.png",
+      "https://github.com/sbauch/opensea-discord-bot"
+    )
+    .setThumbnail(process.env.COLLECTION_IMAGE_URL || sale.asset.image_url)
     .addFields(
-      { name: 'Name', value: sale.asset.name },
-      { name: 'Amount', value: `${ethers.utils.formatEther(sale.total_price || '0')}${ethers.constants.EtherSymbol}` },
-      { name: 'Buyer', value: sale?.winner_account?.address, },
-      { name: 'Seller', value: sale?.seller?.address, },
+      { name: "Name", value: sale.asset.name },
+      {
+        name: "Amount",
+        value: `${ethers.utils.formatEther(BigInt(sale.payment.quantity || 0))}${
+          ethers.constants.EtherSymbol
+        }`,
+      },
+      { name: "Buyer", value: sale.buyer },
+      { name: "Seller", value: sale.seller }
     )
     .setImage(sale.asset.image_url)
-    .setTimestamp(Date.parse(`${sale?.created_date}Z`))
-    .setFooter('Sold on OpenSea', 'https://files.readme.io/566c72b-opensea-logomark-full-colored.png')
-)
+    .setTimestamp(new Date(sale.closing_date * 1000))
+    .setFooter(
+      "Sold on OpenSea",
+      "https://files.readme.io/566c72b-opensea-logomark-full-colored.png"
+    );
 
 async function main() {
   const channel = await discordSetup();
@@ -62,9 +75,7 @@ async function main() {
   }
 
   const params = new URLSearchParams({
-    event_type: 'successful',
-    only_opensea: 'false',
-    collection_slug: process.env.COLLECTION_SLUG!,
+    event_type: 'order'
     // Note: OpenSea no longer supports occurred_after, so we need to manually prune
   })
 
@@ -84,7 +95,7 @@ async function main() {
   let responseText = "";
 
   try {
-    const url = "https://api.opensea.io/api/v1/events?" + params;
+    const url = "https://api.opensea.io/api/v2/events/" + process.env.COLLECTION_SLUG! + "?" + params;
     const openSeaResponseObj = await fetch(url, openSeaFetch);
 
     responseText = await openSeaResponseObj.text();
@@ -101,7 +112,7 @@ async function main() {
     let latestSaleTimestamp: number;
     const promises = [];
     for (const sale of r.asset_events) {
-      const ts = +new Date(sale.transaction.timestamp + ".000Z"); // Fix their broken ISO UTC string (otherwise parses as local timezone)
+      const ts = sale.start_date * 1000; // Fix their broken ISO UTC string (otherwise parses as local timezone)
       if (latestSaleTimestamp === undefined) {
         latestSaleTimestamp = ts + 1;
       }
